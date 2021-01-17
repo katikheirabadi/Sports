@@ -8,7 +8,7 @@ namespace Sports.Models.Page1
     public class Users
     {
         public string Email { get; set; }
-        public static string favorite_sport { get; set; }
-        public static string favorite_team { get; set; }
+        public  string favorite_sport { get; set; }
+        public  string favorite_team { get; set; }
     }
 }

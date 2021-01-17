@@ -19,9 +19,10 @@ namespace Sports.Controllers
             userRepository = new UserRepository_Page1();
         }
         [HttpPost]
-        public void Create([FromBody]Users users)
+        public Users Create([FromBody]Users users)
         {
             userRepository.Insert(users);
+            return users;
         }
     }
 }
