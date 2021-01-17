@@ -10,5 +10,6 @@ namespace Sports.Models.Page1
         public string Email { get; set; }
         public  string favorite_sport { get; set; }
         public  string favorite_team { get; set; }
+        
     }
 }
