@@ -34,7 +34,7 @@ namespace Sports.Services
                 service = JsonSerializer.Deserialize<ServiceList>(stringcontent);
             }
             var take = service.countrys.Take(size);
-            var outputlist = take.Select(s => new OutPut() { Country = s.strCountry, created_year = s.intFormedYear, FirstEvent = s.dateFirstEvent, id = s.idLeague, name = s.strLeague }).ToList();
+            var outputlist = take.Select(s => new OutPut() { Current_Season = s.strCurrentSeason, created_year = s.intFormedYear, FirstEvent = s.dateFirstEvent, id = s.idLeague, name = s.strLeague }).ToList();
             output.Leagues = outputlist;
             return output;
         }

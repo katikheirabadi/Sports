@@ -11,7 +11,7 @@ namespace Sports.Models.Page2
         public string name { get; set; }
         public string created_year { get; set; }
         public string FirstEvent { get; set; }
-        public string Country { get; set; }
+        public string Current_Season { get; set; }
     }
     public class OutputList
     {
