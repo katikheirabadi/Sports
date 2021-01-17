@@ -7,6 +7,15 @@ namespace Sports.Models.Page2
 {
     public class OutPut
     {
-
+        public string id{ get; set; }
+        public string name { get; set; }
+        public string created_year { get; set; }
+        public string FirstEvent { get; set; }
+        public string Country { get; set; }
+    }
+    public class OutputList
+    {
+       public List<OutPut> Leagues { get; set; }
+       
     }
 }
