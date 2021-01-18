@@ -22,6 +22,8 @@ namespace Sports.Controllers
         public Users Create([FromBody]Users users)
         {
             userRepository.Insert(users);
+            Users.Mysport = users.favorite_sport;
+            Users.MyTeam = users.favorite_team;
             return users;
         }
     }

@@ -1,4 +1,5 @@
-﻿using Sports.Models.Page2;
+﻿using Sports.Models.Page1;
+using Sports.Models.Page2;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,21 +23,23 @@ namespace Sports.Services
 
         public OutputList Get_Leagues(string country, int size)
         {
-            var httpresponce = client.GetAsync($"/api/v1/json/1/search_all_leagues.php?c={country}&s=Soccer").Result;
-            httpresponce.EnsureSuccessStatusCode();
-            if (!httpresponce.IsSuccessStatusCode)
-                return null;
-            ServiceList service;
-            OutputList output = new OutputList();
-            using (HttpContent content = httpresponce.Content)
-            {
-                string stringcontent = content.ReadAsStringAsync().Result;
-                service = JsonSerializer.Deserialize<ServiceList>(stringcontent);
-            }
-            var take = service.countrys.Take(size);
-            var outputlist = take.Select(s => new OutPut() { Current_Season = s.strCurrentSeason, created_year = s.intFormedYear, FirstEvent = s.dateFirstEvent, id = s.idLeague, name = s.strLeague }).ToList();
-            output.Leagues = outputlist;
-            return output;
+             var httpresponce = client.GetAsync($"/api/v1/json/1/search_all_leagues.php?c={country}&s={Users.Mysport}").Result;
+             httpresponce.EnsureSuccessStatusCode();
+             if (!httpresponce.IsSuccessStatusCode)
+                 return null;
+             ServiceList service;
+             OutputList output = new OutputList();
+             using (HttpContent content = httpresponce.Content)
+             {
+                  string stringcontent = content.ReadAsStringAsync().Result;
+                  service = JsonSerializer.Deserialize<ServiceList>(stringcontent);
+             }
+             var take = service.countrys.Take(size);
+             var outputlist = take.Select(s => new OutPut() { Current_Season = s.strCurrentSeason, created_year = s.intFormedYear, FirstEvent = s.dateFirstEvent, id = s.idLeague, name = s.strLeague }).ToList();
+             output.Leagues = outputlist;
+             return output;
+          
+           
         }
     }
 }
