@@ -1,5 +1,6 @@
 ﻿using Sports.Models.Page1;
 using Sports.Models.Page2;
+using Sports.Models.Page3;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,9 +38,27 @@ namespace Sports.Services
              var take = service.countrys.Take(size);
              var outputlist = take.Select(s => new OutPut() { Current_Season = s.strCurrentSeason, created_year = s.intFormedYear, FirstEvent = s.dateFirstEvent, id = s.idLeague, name = s.strLeague }).ToList();
              output.Leagues = outputlist;
-             return output;
-          
-           
+            return output;
         }
+
+        public TeamDetailList GetAllTeamInLeague(int id, int size)
+        {
+            var httpResponse = client.GetAsync($"api/v1/json/1/lookup_all_teams.php?id={id}").Result;
+            httpResponse.EnsureSuccessStatusCode();
+            if (!httpResponse.IsSuccessStatusCode) { return null; }
+
+            TeamDetailList result = new TeamDetailList();
+            TeamDetailInputList resultService = new TeamDetailInputList();
+
+            using (HttpContent content = httpResponse.Content) {
+                string stringContent = content.ReadAsStringAsync().Result;
+                resultService = JsonSerializer.Deserialize<TeamDetailInputList>(stringContent);
+            }
+
+            result.Teams = resultService.teams.Take(size).Select(x => new TeamDetail() { Id = x.idTeam, Name = x.strTeam}).ToList();
+            return result;
+        }
+
+
     }
 }

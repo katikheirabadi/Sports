@@ -5,4 +5,7 @@
   </PropertyGroup>
 
 
+  <ItemGroup>
+    <Folder Include="Models\Page3\" />
+  </ItemGroup>
 </Project>
