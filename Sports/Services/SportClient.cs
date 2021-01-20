@@ -1,6 +1,7 @@
 ﻿using Sports.Models.Page1;
 using Sports.Models.Page2;
 using Sports.Models.Page3;
+using Sports.Models.Page4;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,6 +57,24 @@ namespace Sports.Services
             }
 
             result.Teams = resultService.teams.Take(size).Select(x => new TeamDetail() { Id = x.idTeam, Name = x.strTeam}).ToList();
+            return result;
+        }
+        public TeamConnectionList GetTeamConnection(int id)
+        {
+            var httpResponse = client.GetAsync($"api/v1/json/1/lookupteam.php?id={id}").Result;
+            httpResponse.EnsureSuccessStatusCode();
+            if (!httpResponse.IsSuccessStatusCode) { return null; }
+
+            TeamConnectionList result = new TeamConnectionList();
+            TeamConnectionInputList resultService = new TeamConnectionInputList();
+
+            using (HttpContent content = httpResponse.Content)
+            {
+                string stringContent = content.ReadAsStringAsync().Result;
+                resultService = JsonSerializer.Deserialize<TeamConnectionInputList>(stringContent);
+            }
+
+            result.Team = resultService.teams.Select(x => new TeamConnection() { Id = x.idTeam, Team_Name = x.strTeam, Facebook = x.strFacebook, Instagram = x.strInstagram }).ToList();
             return result;
         }
 
